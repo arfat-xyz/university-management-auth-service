@@ -8,7 +8,7 @@
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
     "lint:fix": "lint . --fix",
     "p:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "p:fix" : "prettier --write .",
+    "p:fix": "prettier --write .",
     "lint-prettier": "yarn lint:check && yarn p:check",
     "start": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
