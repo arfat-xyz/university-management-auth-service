@@ -8,7 +8,8 @@ const createUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      user: result,
+      message: `user created successfully`,
+      data: result,
     })
   } catch (error) {
     res.status(400).json({
@@ -18,4 +19,4 @@ const createUser = async (req: Request, res: Response) => {
   }
 }
 
-export default createUser
+export default { createUser }
