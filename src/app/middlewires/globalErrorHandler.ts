@@ -1,27 +1,21 @@
 import { config } from 'dotenv'
-import { NextFunction, Request, Response } from 'express'
+import { ErrorRequestHandler } from 'express'
 import { IGenericErrorMessage } from '../../interfaces/errors'
 import handleValidateError from '../../errors/handleValidateError'
 import mongoose from 'mongoose'
-import { error } from 'winston'
 import ApiError from '../../errors/ApiErrors'
 
 // global error handling
-const globalErrorHandler = (
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   //   res.status(400).json({ error: err })
 
   let statusCode: string | number = 500
   let message = 'Something went wrong'
   let errorsMessages: IGenericErrorMessage[] = []
 
-  if (err?.name === 'ValidationError') {
+  if (error?.name === 'ValidationError') {
     const simplifiedError = handleValidateError(
-      err as mongoose.Error.ValidationError
+      error as mongoose.Error.ValidationError
     )
     statusCode = simplifiedError.statusCode
     message = simplifiedError.message
@@ -48,7 +42,7 @@ const globalErrorHandler = (
     success: false,
     message,
     errorsMessages,
-    stack: config.env !== 'production' ? err.stack : undefined,
+    stack: config.env !== 'production' ? error.stack : undefined,
   })
 
   next()
