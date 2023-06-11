@@ -1,19 +1,42 @@
 import mongoose from 'mongoose'
 import config from './config'
 import app from './app'
-import errorHandler from './Shared/logger'
+import { Logger } from './Shared/logger'
+import { Server } from 'http'
+
+process.on('uncaughtException', error => {
+  Logger.errorLogger.error(error)
+  process.exit(1)
+})
+
+let server: Server
 async function bootstrap() {
   try {
     await mongoose.connect(config.database_url as string)
-    errorHandler.logger.info(`Database connection successfull`)
+    Logger.logger.info(`Database connection successfull`)
 
-    app.listen(config.port, () => {
-      errorHandler.logger.info(`Application listening on port ${config.port}`)
+    server = app.listen(config.port, () => {
+      Logger.logger.info(`Application listening on port ${config.port}`)
     })
   } catch (error) {
-    errorHandler.errorLogger.error(`Database Error: ${error}`)
+    Logger.errorLogger.error(`Database Error: ${error}`)
   }
 
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
+  process.on('unhandledRejection', error => {
+    console.log("Unhandled error found. We're closing our server")
+    if (server) {
+      server.close(() => {
+        Logger.errorLogger.error(error)
+      })
+    } else {
+      process.exit(1)
+    }
+  })
 }
 bootstrap()
+
+process.on('SIGTERM', () => {
+  if (server) {
+    server.close()
+  }
+})

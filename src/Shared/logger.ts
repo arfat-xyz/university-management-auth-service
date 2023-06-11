@@ -65,7 +65,7 @@ const errorLogger = createLogger({
   ],
 })
 
-export default {
+export const Logger = {
   logger,
   errorLogger,
 }
