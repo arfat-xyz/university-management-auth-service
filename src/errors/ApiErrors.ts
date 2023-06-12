@@ -4,12 +4,12 @@ export default class ApiError extends Error {
     message: string | undefined,
     stack = ''
   ) {
-    super(message)
-    this.statusCode = statusCode
+    super(message);
+    this.statusCode = statusCode;
     if (stack) {
-      this.stack = stack
+      this.stack = stack;
     } else {
-      Error.captureStackTrace(this, this.constructor)
+      Error.captureStackTrace(this, this.constructor);
     }
   }
 }
