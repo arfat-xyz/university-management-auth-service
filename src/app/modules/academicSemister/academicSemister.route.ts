@@ -1,13 +1,14 @@
 import express from 'express';
 import zodValidateRequest from '../../middlewires/zodValidateRequest';
 import { academicSemisterZodValidation } from './academicSemister.zod.valitation';
+import { AcademicSemisterController } from './academicSemister.controller';
 
 const router = express.Router();
 
 router.post(
-  '/create-user',
-  zodValidateRequest(academicSemisterZodValidation.academicSemisterZodSchema)
-  //   UserController.createUser
+  '/create-semister',
+  zodValidateRequest(academicSemisterZodValidation.academicSemisterZodSchema),
+  AcademicSemisterController.createSemisterController
 );
 
-export const UserRouter = router;
+export const AcademicSemisterRoutes = router;

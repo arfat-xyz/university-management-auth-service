@@ -19,7 +19,7 @@ const academicSemisterZodSchema = z.object({
       required_error: 'Start month is required',
     }),
     endMonth: z.enum([...academicSemisterMonths] as [string, ...string[]], {
-      required_error: 'Start month is required',
+      required_error: 'End month is required',
     }),
   }),
 });
