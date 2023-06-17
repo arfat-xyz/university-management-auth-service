@@ -10,5 +10,6 @@ router.post(
   zodValidateRequest(academicSemisterZodValidation.academicSemisterZodSchema),
   AcademicSemisterController.createSemisterController
 );
+router.get('/', AcademicSemisterController.getAllSemisters);
 
 export const AcademicSemisterRoutes = router;

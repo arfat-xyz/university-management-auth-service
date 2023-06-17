@@ -1,4 +1,5 @@
 import ApiError from '../../../errors/ApiErrors';
+import { IPaginationOptions } from '../../../interfaces/pagination';
 import { academicSemisterTitleCodeMapper } from './academicSemister.constant';
 import { IAcademcSemisterInterface } from './academicSemister.interface';
 import { academicSemister } from './academicSemister.schema';
@@ -13,6 +14,11 @@ const createSemister = async (
   const result = await academicSemister.create(payload);
   return result;
 };
+
+const getAllSemisters = (paginationOptions: IPaginationOptions) => {
+  return paginationOptions;
+};
 export const academicSemisterServices = {
   createSemister,
+  getAllSemisters,
 };
