@@ -1,7 +1,9 @@
 import { SortOrder } from 'mongoose';
 import ApiError from '../../../errors/ApiErrors';
+
 import { paginationHelpers } from '../../../helpers/paginationHelpers';
 import { IGenericResponse } from '../../../interfaces/common';
+
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { academicSemisterTitleCodeMapper } from './academicSemister.constant';
 import { IAcademcSemisterInterface } from './academicSemister.interface';
@@ -45,6 +47,10 @@ const getAllSemisters = async (
     },
     data: result,
   };
+=======
+const getAllSemisters = (paginationOptions: IPaginationOptions) => {
+  return paginationOptions;
+
 };
 export const academicSemisterServices = {
   createSemister,
