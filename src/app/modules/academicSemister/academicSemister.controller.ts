@@ -6,11 +6,10 @@ import sendResponse from '../../../Shared/sendResponse';
 import httpStatus from 'http-status';
 import pick from '../../../Shared/pick';
 import { paginationFields } from '../../../constants/pagination';
-import { IAcademcSemisterInterface } from './academicSemister.interface';
-
-import pick from '../../../Shared/pick';
-import { paginationFields } from '../../../constants/pagination';
-
+import {
+  IAcademcSemisterInterface,
+  IAcademicSemisterFilters,
+} from './academicSemister.interface';
 
 const createSemisterController = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -29,33 +28,9 @@ const createSemisterController = catchAsync(
     next();
   }
 );
+
 const getAllSemisters = catchAsync(
   // eslint-disable-next-line no-unused-vars
-  async (req: Request, res: Response) => {
-    const paginationOptions = pick(req.query, paginationFields);
-    const result = await academicSemisterServices.getAllSemisters(
-      paginationOptions
-    );
-    sendResponse<IAcademcSemisterInterface[]>(res, {
-      statusCode: httpStatus.OK,
-
-    res.status(200).json({
-
-      success: true,
-      message: `Academic semister created successfully.`,
-      meta: result.meta,
-      data: result.data || null,
-    });
-
-    // next();
-  }
-);
-
-    next();
-  }
-);
-
-const getAllSemisters = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     // const paginationOptions: IPaginationOptions = {
     //   page: Number(req.query.page),
@@ -64,8 +39,9 @@ const getAllSemisters = catchAsync(
     //   sortOrder: req.query.sortOrder as 'asc' | 'desc',
     // };
     const paginationOptions = pick(req.query, paginationFields);
-    console.log(paginationOptions);
+    const filters = pick(req.query, ['searchTerm']);
     const result = await academicSemisterServices.getAllSemisters(
+      filters as IAcademicSemisterFilters,
       paginationOptions
     );
     res.status(200).json({
@@ -73,7 +49,7 @@ const getAllSemisters = catchAsync(
       message: `Semisters retrive successfully.`,
       data: result,
     });
-    next();
+    // next();
   }
 );
 

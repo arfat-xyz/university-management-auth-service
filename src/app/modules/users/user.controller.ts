@@ -12,6 +12,7 @@ const createUser: RequestHandler = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: `User created successfully.`,
+      meta: null,
       data: result,
     });
     next();

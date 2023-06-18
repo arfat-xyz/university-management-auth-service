@@ -4,7 +4,7 @@ export type IPaginationOptions = {
 
   sortBy?: 'title' | 'year' | 'code' | 'startMonth' | 'endMonth' | 'createdAt';
 
-  sortBy?: string;
+  // sortBy?: string;
 
   sortOrder?: 'asc' | 'desc';
 };

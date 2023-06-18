@@ -23,3 +23,6 @@ export type IAcademcSemisterInterface = {
   endMonth: IAcademicSemiserMonth;
 };
 export type IAcademcSemisterModel = Model<IAcademcSemisterInterface>;
+export type IAcademicSemisterFilters = {
+  searchTerm: string;
+};
