@@ -19,7 +19,7 @@ const academicSemisterSchema = new Schema<IAcademcSemisterInterface>(
       enum: academicSemisterTitle,
     },
     year: {
-      type: Number,
+      type: String,
       required: true,
     },
     code: {

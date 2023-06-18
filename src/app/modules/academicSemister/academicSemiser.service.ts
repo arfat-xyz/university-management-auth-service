@@ -53,7 +53,7 @@ const getAllSemisters = async (
         },
         {
           year: {
-            $regex: searchTerm,
+            $regex: Number(searchTerm),
             $options: 'i',
           },
         },

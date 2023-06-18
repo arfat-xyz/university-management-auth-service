@@ -17,7 +17,7 @@ export type IAcademicSemiserTitle = 'Autumn' | 'Summer' | 'Fall';
 export type IAcademicSemisterCode = '01' | '02' | '03';
 export type IAcademcSemisterInterface = {
   title: IAcademicSemiserTitle;
-  year: number;
+  year: string;
   code: IAcademicSemisterCode;
   startMonth: IAcademicSemiserMonth;
   endMonth: IAcademicSemiserMonth;
