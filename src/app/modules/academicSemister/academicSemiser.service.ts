@@ -29,44 +29,64 @@ const getAllSemisters = async (
 ): Promise<IGenericResponse<IAcademcSemisterInterface[]>> => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
-  const { searchTerm } = filters;
+  const { searchTerm, ...filtersFields } = filters;
   const sortCondition: { [key: string]: SortOrder } = {};
 
   if (sortBy && sortOrder) {
     sortCondition[sortBy] = sortOrder;
   }
 
-  const andCondition = [
-    {
-      $or: [
-        {
-          title: {
-            $regex: searchTerm,
-            $options: 'i',
-          },
+  const academicSemisterSearchableFields = ['title', 'code', 'year'];
+  const andCondition = [];
+  if (searchTerm) {
+    andCondition.push({
+      $or: academicSemisterSearchableFields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
         },
-        {
-          code: {
-            $regex: searchTerm,
-            $options: 'i',
-          },
-        },
-        {
-          year: {
-            $regex: Number(searchTerm),
-            $options: 'i',
-          },
-        },
-      ],
-    },
-  ];
+      })),
+    });
+  }
+
+  console.log('arfat', andCondition, filtersFields, filters);
+  // if (Object.keys(filtersFields).length) {
+  //   andCondition.push({
+  //     $and: Object.entries(filtersFields).map(([field, value]) => ({
+  //       [field]: value,
+  //     })),
+  //   });
+  // }
+  // const andCondition = [
+  //   {
+  //     $or: [
+  //       {
+  //         title: {
+  //           $regex: searchTerm,
+  //           $options: 'i',
+  //         },
+  //       },
+  //       {
+  //         code: {
+  //           $regex: searchTerm,
+  //           $options: 'i',
+  //         },
+  //       },
+  //       {
+  //         year: {
+  //           $regex: Number(searchTerm),
+  //           $options: 'i',
+  //         },
+  //       },
+  //     ],
+  //   },
+  // ];
 
   const result = await academicSemister
     .find({ $and: andCondition })
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
-  // console.log(result, skip, page, limit);
   const total = await academicSemister.countDocuments();
   return {
     meta: {
