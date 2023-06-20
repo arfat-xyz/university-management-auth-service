@@ -10,6 +10,7 @@ import {
   IAcademcSemisterInterface,
   IAcademicSemisterFilters,
 } from './academicSemister.interface';
+import { academicSemiserSearchableFields } from './academicSemister.constant';
 
 const createSemisterController = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +23,6 @@ const createSemisterController = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: `Academic semister created successfully.`,
-      meta: null,
       data: result || null,
     });
     next();
@@ -39,21 +39,41 @@ const getAllSemisters = catchAsync(
     //   sortOrder: req.query.sortOrder as 'asc' | 'desc',
     // };
     const paginationOptions = pick(req.query, paginationFields);
-    const filters = pick(req.query, ['searchTerm']);
+    const filters = pick(req.query, academicSemiserSearchableFields);
     const result = await academicSemisterServices.getAllSemisters(
       filters as IAcademicSemisterFilters,
       paginationOptions
     );
-    res.status(200).json({
+
+    sendResponse<IAcademcSemisterInterface[]>(res, {
+      statusCode: httpStatus.OK,
       success: true,
       message: `Semisters retrive successfully.`,
-      data: result,
+      meta: result.meta || null,
+      data: result.data || null,
     });
-    // next();
+
+    next();
+  }
+);
+
+const getSingleSemisterController = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const result = await academicSemisterServices.getSingleSemisterService(
+      req.params.id
+    );
+    sendResponse<IAcademcSemisterInterface>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: `Semister retrive successfully.`,
+      data: result || null,
+    });
+    next();
   }
 );
 
 export const AcademicSemisterController = {
   createSemisterController,
+  getSingleSemisterController,
   getAllSemisters,
 };

@@ -5,7 +5,10 @@ import { paginationHelpers } from '../../../helpers/paginationHelpers';
 import { IGenericResponse } from '../../../interfaces/common';
 
 import { IPaginationOptions } from '../../../interfaces/pagination';
-import { academicSemisterTitleCodeMapper } from './academicSemister.constant';
+import {
+  academicSemisterFilterableFields,
+  academicSemisterTitleCodeMapper,
+} from './academicSemister.constant';
 import {
   IAcademcSemisterInterface,
   IAcademicSemisterFilters,
@@ -36,11 +39,10 @@ const getAllSemisters = async (
     sortCondition[sortBy] = sortOrder;
   }
 
-  const academicSemisterSearchableFields = ['title', 'code', 'year'];
   const andCondition = [];
   if (searchTerm) {
     andCondition.push({
-      $or: academicSemisterSearchableFields.map(field => ({
+      $or: academicSemisterFilterableFields.map(field => ({
         [field]: {
           $regex: searchTerm,
           $options: 'i',
@@ -49,14 +51,13 @@ const getAllSemisters = async (
     });
   }
 
-  console.log('arfat', andCondition, filtersFields, filters);
-  // if (Object.keys(filtersFields).length) {
-  //   andCondition.push({
-  //     $and: Object.entries(filtersFields).map(([field, value]) => ({
-  //       [field]: value,
-  //     })),
-  //   });
-  // }
+  if (Object.keys(filtersFields).length) {
+    andCondition.push({
+      $and: Object.entries(filtersFields).map(([field, value]) => ({
+        [field]: value,
+      })),
+    });
+  }
   // const andCondition = [
   //   {
   //     $or: [
@@ -81,9 +82,9 @@ const getAllSemisters = async (
   //     ],
   //   },
   // ];
-
+  const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
   const result = await academicSemister
-    .find({ $and: andCondition })
+    .find(whereCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
@@ -97,7 +98,16 @@ const getAllSemisters = async (
     data: result,
   };
 };
+
+const getSingleSemisterService = async (
+  id: string
+): Promise<IAcademcSemisterInterface | null> => {
+  const result = await academicSemister.findById(id);
+  return result;
+};
+
 export const academicSemisterServices = {
   createSemister,
+  getSingleSemisterService,
   getAllSemisters,
 };
