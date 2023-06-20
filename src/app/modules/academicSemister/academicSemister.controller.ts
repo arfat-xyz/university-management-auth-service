@@ -71,9 +71,27 @@ const getSingleSemisterController = catchAsync(
     next();
   }
 );
+const updateSemister = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id;
+    const updateData = req.body;
+    const result = await academicSemisterServices.updateSemister(
+      id,
+      updateData
+    );
+    sendResponse<IAcademcSemisterInterface>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: `Semister retrive successfully.`,
+      data: result || null,
+    });
+    next();
+  }
+);
 
 export const AcademicSemisterController = {
   createSemisterController,
   getSingleSemisterController,
   getAllSemisters,
+  updateSemister,
 };

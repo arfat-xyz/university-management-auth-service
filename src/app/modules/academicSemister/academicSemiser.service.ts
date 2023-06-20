@@ -105,9 +105,21 @@ const getSingleSemisterService = async (
   const result = await academicSemister.findById(id);
   return result;
 };
+const updateSemister = async (
+  id: string,
+  payload: Partial<IAcademcSemisterInterface>
+): Promise<IAcademcSemisterInterface | null> => {
+  const result = await academicSemister.findByIdAndUpdate(
+    { _id: id },
+    payload,
+    { new: true }
+  );
+  return result;
+};
 
 export const academicSemisterServices = {
   createSemister,
   getSingleSemisterService,
   getAllSemisters,
+  updateSemister,
 };

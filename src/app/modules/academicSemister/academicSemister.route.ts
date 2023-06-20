@@ -12,5 +12,6 @@ router.post(
 );
 router.get('/:id', AcademicSemisterController.getSingleSemisterController);
 router.get('/', AcademicSemisterController.getAllSemisters);
+router.patch('/:id', AcademicSemisterController.updateSemister);
 
 export const AcademicSemisterRoutes = router;
