@@ -2,12 +2,13 @@
 import { ErrorRequestHandler } from 'express';
 import { IGenericErrorMessage } from '../../interfaces/errors';
 import handleValidateError from '../../errors/handleValidateError';
-import mongoose from 'mongoose';
+import mongoose, { CastError } from 'mongoose';
 import ApiError from '../../errors/ApiErrors';
 import config from '../../config';
 import { Logger } from '../../Shared/logger';
 import { ZodError } from 'zod';
 import handleZodError from '../../errors/handleZodError';
+import handleCastError from '../../errors/handleCastError';
 
 // global error handling
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
@@ -24,6 +25,12 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     const simplifiedError = handleValidateError(
       error as mongoose.Error.ValidationError
     );
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorsMessages = simplifiedError.errorsMessages;
+  } else if (error?.name === 'CastError') {
+    const simplifiedError = handleCastError(error as CastError);
+    console.log(simplifiedError);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorsMessages = simplifiedError.errorsMessages;
