@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 import { ErrorRequestHandler } from 'express';
 import { IGenericErrorMessage } from '../../interfaces/errors';
@@ -63,7 +64,5 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     errorsMessages,
     stack: config.env !== 'production' ? error.stack : undefined,
   });
-
-  next();
 };
 export default globalErrorHandler;

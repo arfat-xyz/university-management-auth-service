@@ -109,6 +109,13 @@ const updateSemister = async (
   id: string,
   payload: Partial<IAcademcSemisterInterface>
 ): Promise<IAcademcSemisterInterface | null> => {
+  if (
+    payload.title &&
+    payload.code &&
+    academicSemisterTitleCodeMapper[payload.title] !== payload.code
+  ) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid semister code');
+  }
   const result = await academicSemister.findByIdAndUpdate(
     { _id: id },
     payload,
@@ -117,9 +124,17 @@ const updateSemister = async (
   return result;
 };
 
+const deleteSemister = async (
+  id: string
+): Promise<IAcademcSemisterInterface | null> => {
+  const result = await academicSemister.findByIdAndDelete(id);
+  return result;
+};
+
 export const academicSemisterServices = {
   createSemister,
   getSingleSemisterService,
   getAllSemisters,
   updateSemister,
+  deleteSemister,
 };

@@ -7,11 +7,24 @@ const router = express.Router();
 
 router.post(
   '/create-semister',
-  zodValidateRequest(academicSemisterZodValidation.academicSemisterZodSchema),
+  zodValidateRequest(
+    academicSemisterZodValidation.createAcademicSemisterZodSchema
+  ),
   AcademicSemisterController.createSemisterController
 );
 router.get('/:id', AcademicSemisterController.getSingleSemisterController);
+router.patch(
+  '/:id',
+  zodValidateRequest(
+    academicSemisterZodValidation.updateAcademicSemisterZodSchema
+  ),
+  AcademicSemisterController.updateSemister
+);
+router.delete(
+  '/:id',
+
+  AcademicSemisterController.deleteSemister
+);
 router.get('/', AcademicSemisterController.getAllSemisters);
-router.patch('/:id', AcademicSemisterController.updateSemister);
 
 export const AcademicSemisterRoutes = router;
