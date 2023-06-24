@@ -15,6 +15,7 @@ import {
 } from './academicSemister.interface';
 import { academicSemister } from './academicSemister.schema';
 import httpStatus from 'http-status';
+// import pick from '../../../Shared/pick';
 const createSemister = async (
   payload: IAcademcSemisterInterface
 ): Promise<IAcademcSemisterInterface> => {
@@ -106,8 +107,56 @@ const getSingleSemisterService = async (
   return result;
 };
 
+const updateSemister = async (
+  id: string,
+  payload: Partial<IAcademcSemisterInterface>
+): Promise<IAcademcSemisterInterface | null> => {
+  if (
+    payload.code &&
+    payload.title &&
+    academicSemisterTitleCodeMapper[payload.title] !== payload.code
+  ) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid semister code');
+  }
+
+  // const existingChecker = async (
+  //   payload: Partial<IAcademcSemisterInterface>,
+  //   payloadField: Array<keyof IAcademcSemisterInterface>,
+  //   year: string | null | undefined = null
+  // ) => {
+  //   const x = pick(payload, payloadField);
+  //   if (year) {
+  //     x.year = year;
+  //   }
+  //   const exist = await academicSemister.findOne(x);
+  //   if (exist) {
+  //     throw new ApiError(
+  //       httpStatus.CONFLICT,
+  //       'Academic semister already exist !'
+  //     );
+  //   }
+  // };
+
+  // if (payload.code && payload.title && payload.year) {
+  //   existingChecker(payload, ['code', 'title', 'year']);
+  // } else if (payload.code && payload.title) {
+  //   const semister = await academicSemister.findById(id);
+  //   existingChecker(payload, ['code', 'title'], semister?.year);
+  // }
+
+  const result = await academicSemister.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
+const deleteSemister = async (id: string) => {
+  const result = await academicSemister.findByIdAndDelete(id);
+  return result;
+};
 export const academicSemisterServices = {
   createSemister,
   getSingleSemisterService,
   getAllSemisters,
+  updateSemister,
+  deleteSemister,
 };
