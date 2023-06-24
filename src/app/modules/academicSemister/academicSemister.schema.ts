@@ -40,6 +40,9 @@ const academicSemisterSchema = new Schema<IAcademcSemisterInterface>(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
 
@@ -49,6 +52,7 @@ academicSemisterSchema.pre('save', async function (next) {
     title: this.title,
     year: this.year,
   });
+
   if (exist) {
     throw new ApiError(status.CONFLICT, 'Academic semister already exist !');
   }
