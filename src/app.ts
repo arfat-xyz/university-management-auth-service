@@ -3,6 +3,7 @@ import cors from 'cors';
 import globalErrorHandler from './app/middlewires/globalErrorHandler';
 import routers from './app/routes';
 import httpStatus from 'http-status';
+// import { generateUserId } from './app/modules/users/user.utils';
 const app: Application = express();
 
 app.use(cors());
@@ -23,6 +24,12 @@ app.use('/api/v1', routers);
 // //   throw new Error('Bodda matha tik ase ne')
 //   // next('Matha tik ase.......?')
 // })
+
+// Testing Student User
+// const test = async () => {
+//   const user = await generateUserId({ year: '2025', code: '01' });
+// };
+// test();
 
 // Global error handler
 app.use(globalErrorHandler);

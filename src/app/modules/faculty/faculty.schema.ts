@@ -1,26 +1,21 @@
 import { Schema, model } from 'mongoose';
-import { IFaculty } from './faculty.interface';
-import ApiError from '../../../errors/ApiErrors';
-import httpStatus from 'http-status';
+import { IFaculty, IFacultyModel } from './faculty.interface';
 
-const facultySchema = new Schema<IFaculty>(
+const facultSchema = new Schema<IFaculty>(
   {
     title: {
       type: String,
       required: true,
+      unique: true,
     },
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
+const FacultyModel = model<IFaculty, IFacultyModel>('Faculty', facultSchema);
 
-facultySchema.pre('save', async function (next) {
-  const exist = await FacultyModel.findOne({ title: this.title });
-  if (exist) {
-    throw new ApiError(httpStatus.CONFLICT, 'This faculty already exists');
-  }
-  next();
-});
-
-export const FacultyModel = model('Faculty', facultySchema);
+export default FacultyModel;

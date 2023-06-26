@@ -20,6 +20,14 @@ router.patch(
   ),
   AcademicSemisterController.updateSemister
 );
+router.delete('/:id', AcademicSemisterController.deleteSemister);
+router.patch(
+  '/:id',
+  zodValidateRequest(
+    academicSemisterZodValidation.updateAcademicSemisterZodSchema
+  ),
+  AcademicSemisterController.updateSemister
+);
 router.delete(
   '/:id',
 

@@ -1,20 +1,22 @@
-import express from 'express';
+import { Router } from 'express';
 import { facultyController } from './faculty.controller';
-import { facultyZodValidation } from './faculty.zod.validation';
 import zodValidateRequest from '../../middlewires/zodValidateRequest';
-const router = express.Router();
+import { facultyZodSchema } from './faculty.zod.validation';
+
+const router = Router();
 
 router.post(
   '/create-faculty',
-  zodValidateRequest(facultyZodValidation.validateTitle),
+  zodValidateRequest(facultyZodSchema.createFaculty),
   facultyController.createFaculty
 );
 router.get('/:id', facultyController.getSingleFaculty);
 router.patch(
-  '/:id',
-  zodValidateRequest(facultyZodValidation.validateTitle),
+  '/: id',
+  zodValidateRequest(facultyZodSchema.createFaculty),
   facultyController.updateFaculty
 );
 router.delete('/:id', facultyController.deleteFaculty);
-// router.get('/', facultyController.getAllFaculty);
-export const FacultyRoutes = router;
+router.get('/', facultyController.getAllFaculty);
+
+export const facultyRoutes = router;

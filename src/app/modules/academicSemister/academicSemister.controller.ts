@@ -89,6 +89,29 @@ const deleteSemister = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// const updateSemister = catchAsync(async (req: Request, res: Response) => {
+//   const id = req.params.id;
+//   const updatedData = req.body;
+//   const result = await academicSemisterServices.updateSemister(id, updatedData);
+//   sendResponse<IAcademcSemisterInterface>(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: `Semister updated successfully.`,
+//     data: result || null,
+//   });
+// });
+
+// const deleteSemister = catchAsync(async (req: Request, res: Response) => {
+//   const id = req.params.id;
+//   const result = await academicSemisterServices.deleteSemister(id);
+//   sendResponse<IAcademcSemisterInterface>(res, {
+//     statusCode: httpStatus.OK,
+//     success: true,
+//     message: `Semister updated successfully.`,
+//     data: result || null,
+//   });
+// });
+
 export const AcademicSemisterController = {
   createSemisterController,
   getSingleSemisterController,
