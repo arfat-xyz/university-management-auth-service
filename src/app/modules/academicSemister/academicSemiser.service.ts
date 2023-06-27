@@ -13,7 +13,7 @@ import {
   IAcademcSemisterInterface,
   IAcademicSemisterFilters,
 } from './academicSemister.interface';
-import { academicSemister } from './academicSemister.schema';
+import { AcademicSemister } from './academicSemister.schema';
 import httpStatus from 'http-status';
 // import pick from '../../../Shared/pick';
 const createSemister = async (
@@ -23,7 +23,7 @@ const createSemister = async (
     throw new ApiError(httpStatus.BAD_REQUEST, 'Invalid semister code');
   }
 
-  const result = await academicSemister.create(payload);
+  const result = await AcademicSemister.create(payload);
   return result;
 };
 
@@ -84,12 +84,11 @@ const getAllSemisters = async (
   //   },
   // ];
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
-  const result = await academicSemister
-    .find(whereCondition)
+  const result = await AcademicSemister.find(whereCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
-  const total = await academicSemister.countDocuments();
+  const total = await AcademicSemister.countDocuments();
   return {
     meta: {
       page,
@@ -103,7 +102,7 @@ const getAllSemisters = async (
 const getSingleSemisterService = async (
   id: string
 ): Promise<IAcademcSemisterInterface | null> => {
-  const result = await academicSemister.findById(id);
+  const result = await AcademicSemister.findById(id);
   return result;
 };
 
@@ -144,13 +143,13 @@ const updateSemister = async (
   //   existingChecker(payload, ['code', 'title'], semister?.year);
   // }
 
-  const result = await academicSemister.findOneAndUpdate({ _id: id }, payload, {
+  const result = await AcademicSemister.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
   return result;
 };
 const deleteSemister = async (id: string) => {
-  const result = await academicSemister.findByIdAndDelete(id);
+  const result = await AcademicSemister.findByIdAndDelete(id);
   return result;
 };
 export const academicSemisterServices = {

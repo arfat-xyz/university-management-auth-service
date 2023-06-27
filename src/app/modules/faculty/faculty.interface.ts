@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 
-export type IFaculty = {
+export type IAcademicFaculty = {
   title: string;
 };
 export type IFilterableFields = {
@@ -8,4 +8,4 @@ export type IFilterableFields = {
   title: string;
 };
 
-export type IFacultyModel = Model<IFaculty>;
+export type IFacultyModel = Model<IAcademicFaculty>;

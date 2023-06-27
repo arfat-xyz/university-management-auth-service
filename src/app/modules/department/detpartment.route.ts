@@ -5,7 +5,7 @@ import { departmentZodSchema } from './detpartment.zod.validation';
 
 const router = Router();
 
-router.get(
+router.post(
   '/create-department',
   zodValidateRequest(departmentZodSchema.createDepartment),
   departmentController.createDepartment

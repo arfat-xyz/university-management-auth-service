@@ -6,9 +6,19 @@ import zodValidateRequest from '../../middlewires/zodValidateRequest';
 const router = express.Router();
 
 router.post(
-  '/create-user',
-  zodValidateRequest(UserZodValidation.createUserZodSchema),
-  UserController.createUser
+  '/create-student',
+  zodValidateRequest(UserZodValidation.createStudentZodSchema),
+  UserController.createStudent
+);
+router.post(
+  '/create-admin',
+  zodValidateRequest(UserZodValidation.createAdminZodSchema),
+  UserController.createAdmin
+);
+router.post(
+  '/create-faculty',
+  zodValidateRequest(UserZodValidation.createFacultyZodSchema),
+  UserController.createFaculty
 );
 
 export const UserRouter = router;

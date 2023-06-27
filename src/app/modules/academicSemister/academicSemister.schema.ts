@@ -48,7 +48,7 @@ const academicSemisterSchema = new Schema<IAcademcSemisterInterface>(
 
 // Handling Same year same semister issue
 academicSemisterSchema.pre('save', async function (next) {
-  const exist = await academicSemister.findOne({
+  const exist = await AcademicSemister.findOne({
     title: this.title,
     year: this.year,
   });
@@ -59,7 +59,7 @@ academicSemisterSchema.pre('save', async function (next) {
   next();
 });
 
-export const academicSemister = model<
+export const AcademicSemister = model<
   IAcademcSemisterInterface,
   IAcademcSemisterModel
 >('academicSemister', academicSemisterSchema);
