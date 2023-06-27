@@ -1,9 +1,9 @@
 import { Model, Types } from 'mongoose';
-import { IFaculty } from '../faculty/faculty.interface';
+import { IAcademicFaculty } from '../faculty/faculty.interface';
 
 export type IAcademicDepartment = {
   title: string;
-  academicFaculty: Types.ObjectId | IFaculty;
+  academicFaculty: Types.ObjectId | IAcademicFaculty;
 };
 
 export type IAcademicDepartmentModel = Model<

@@ -1,27 +1,29 @@
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/ApiErrors';
-import { IFaculty, IFilterableFields } from './faculty.interface';
-import FacultyModel from './faculty.schema';
+import { IAcademicFaculty, IFilterableFields } from './faculty.interface';
+import AcademicFacultyModel from './faculty.schema';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { SortOrder } from 'mongoose';
 import { filterableFields } from './faculty.constant';
 import { paginationHelpers } from '../../../helpers/paginationHelpers';
 import { IGenericResponse } from '../../../interfaces/common';
 
-const createFaculty = async (payload: IFaculty): Promise<IFaculty> => {
-  const exist = await FacultyModel.findOne(payload);
+const createFaculty = async (
+  payload: IAcademicFaculty
+): Promise<IAcademicFaculty> => {
+  const exist = await AcademicFacultyModel.findOne(payload);
   if (exist) {
     throw new ApiError(httpStatus.CONFLICT, 'Faculty semister already exist !');
   }
 
-  const result = await FacultyModel.create(payload);
+  const result = await AcademicFacultyModel.create(payload);
   return result;
 };
 
 const getAllFaculty = async (
   pagination: IPaginationOptions,
   filters: IFilterableFields
-): Promise<IGenericResponse<IFaculty[]>> => {
+): Promise<IGenericResponse<IAcademicFaculty[]>> => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(pagination);
   const { searchTerm, ...filterFields } = filters;
@@ -49,11 +51,11 @@ const getAllFaculty = async (
     });
   }
   const whereCondition = andCondition.length > 0 ? { $and: andCondition } : {};
-  const result = await FacultyModel.find(whereCondition)
+  const result = await AcademicFacultyModel.find(whereCondition)
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
-  const total = await FacultyModel.countDocuments();
+  const total = await AcademicFacultyModel.countDocuments();
   return {
     meta: {
       page,
@@ -64,22 +66,24 @@ const getAllFaculty = async (
   };
 };
 
-const getSingleFaculty = async (id: string): Promise<IFaculty | null> => {
-  const result = await FacultyModel.findById(id);
+const getSingleFaculty = async (
+  id: string
+): Promise<IAcademicFaculty | null> => {
+  const result = await AcademicFacultyModel.findById(id);
   return result;
 };
 
 const updateFaculty = async (
   id: string,
-  payload: Partial<IFaculty>
-): Promise<IFaculty | null> => {
-  const result = FacultyModel.findOneAndUpdate({ _id: id }, payload, {
+  payload: Partial<IAcademicFaculty>
+): Promise<IAcademicFaculty | null> => {
+  const result = AcademicFacultyModel.findOneAndUpdate({ _id: id }, payload, {
     new: true,
   });
   return result;
 };
-const deleteFaculty = async (id: string): Promise<IFaculty | null> => {
-  const result = FacultyModel.findByIdAndDelete(id);
+const deleteFaculty = async (id: string): Promise<IAcademicFaculty | null> => {
+  const result = AcademicFacultyModel.findByIdAndDelete(id);
   return result;
 };
 
