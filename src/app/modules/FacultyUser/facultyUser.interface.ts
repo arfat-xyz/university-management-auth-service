@@ -24,3 +24,13 @@ export type IFacultyUser = {
   profileImage: string;
 };
 export type IFacultyUserModel = Model<IFacultyUser, Record<string, unknown>>;
+
+export type IFacultyUsersFilters = {
+  searchTerm?: string;
+  id?: string;
+  email?: string;
+  contactNo?: string;
+  emergencyContactNo?: string;
+  academicFaculty?: string;
+  designation?: string;
+};
