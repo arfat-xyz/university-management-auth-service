@@ -5,7 +5,6 @@ import handleValidateError from '../../errors/handleValidateError';
 import mongoose, { CastError } from 'mongoose';
 import ApiError from '../../errors/ApiErrors';
 import config from '../../config';
-import { Logger } from '../../Shared/logger';
 import { ZodError } from 'zod';
 import handleZodError from '../../errors/handleZodError';
 import handleCastError from '../../errors/handleCastError';
@@ -16,7 +15,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
 
   config.env === 'development'
     ? console.log('😀 GlobalErrorHandler', error)
-    : Logger.errorLogger.error('😀 GlobalErrorHandler', error);
+    : console.log('😀 GlobalErrorHandler', error);
   let statusCode: string | number = 500;
   let message = 'Something went wrong';
   let errorsMessages: IGenericErrorMessage[] = [];

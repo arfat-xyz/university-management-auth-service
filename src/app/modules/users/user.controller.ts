@@ -11,7 +11,7 @@ const createStudent: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: `User created successfully.`,
+      message: `Student is created successfully.`,
       meta: null,
       data: result,
     });
@@ -24,7 +24,7 @@ const createAdmin: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: `User created successfully.`,
+      message: `Admin is created successfully.`,
       meta: null,
       data: result,
     });
@@ -37,7 +37,7 @@ const createFaculty: RequestHandler = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: `User created successfully.`,
+      message: `Faculty is created successfully.`,
       meta: null,
       data: result,
     });

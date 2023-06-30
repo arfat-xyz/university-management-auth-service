@@ -24,5 +24,5 @@ export type IAcademcSemisterInterface = {
 };
 export type IAcademcSemisterModel = Model<IAcademcSemisterInterface>;
 export type IAcademicSemisterFilters = {
-  searchTerm: string;
+  searchTerm?: string;
 };

@@ -51,3 +51,10 @@ export type IStudent = {
   academicFaculty: Types.ObjectId | IAcademicFaculty;
 };
 export type IStudentModel = Model<IStudent, Record<string, unknown>>;
+export type IStudentFilters = {
+  searchTerm?: string;
+  id?: string;
+  email?: string;
+  contactNo?: string;
+  emergencyContactNo?: string;
+};

@@ -36,9 +36,15 @@ export const StudentSchema = new Schema<IStudent, IStudentModel>(
       type: String,
       required: true,
     },
+    contactNo: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     presentAddress: {
       type: String,
