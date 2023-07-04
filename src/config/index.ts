@@ -9,4 +9,7 @@ export default {
     process.env.UNIVERSITY_DEFAULT_STUDENT_PASSWORD,
   university_default_admin_password:
     process.env.UNIVERSITY_DEFAULT_ADMIN_PASSWORD,
+  university_default_faculty_password:
+    process.env.UNIVERSITY_DEFAULT_FACULTY_PASSWORD,
+  bycrypt_saltrounds: process.env.BYCRYPT_SALTROUNDS,
 };

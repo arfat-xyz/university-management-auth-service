@@ -5,7 +5,6 @@ export const facultyUsersFilterableFields = [
   'email',
   'contactNo',
   'emergencyContactNo',
-  'academicFaculty',
   'designation',
 ];
 export const FacultyUsersSearchableFields = [

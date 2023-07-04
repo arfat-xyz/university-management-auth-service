@@ -35,6 +35,7 @@ export const StudentSchema = new Schema<IStudent, IStudentModel>(
     emergencyContactNo: {
       type: String,
       required: true,
+      unique: true,
     },
     contactNo: {
       type: String,

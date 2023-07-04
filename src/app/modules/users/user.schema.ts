@@ -3,6 +3,8 @@ import { IUser, UserModel } from './user.interface';
 import { studentModel } from '../student/student.model';
 import { adminModel } from '../admin/admin.model';
 import { facultyUserModel } from '../FacultyUser/facultyUser.model';
+import bcrypt from 'bcrypt';
+import config from '../../../config';
 
 const userSchema = new Schema<IUser>(
   {
@@ -39,4 +41,13 @@ const userSchema = new Schema<IUser>(
     },
   }
 );
+
+userSchema.pre('save', async function (next) {
+  this.password = await bcrypt.hash(
+    this.password,
+    Number(config.bycrypt_saltrounds)
+  );
+  next();
+});
+
 export const User = model<IUser, UserModel>('User', userSchema);

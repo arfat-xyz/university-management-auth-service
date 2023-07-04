@@ -172,7 +172,7 @@ const createFaculty = async (faculty: IFacultyUser, user: IUser) => {
   // console.log(student, user);
   // set default password
   if (!user.password) {
-    user.password = config.university_default_admin_password as string;
+    user.password = config.university_default_faculty_password as string;
   }
 
   // SET STUDENT ROLE

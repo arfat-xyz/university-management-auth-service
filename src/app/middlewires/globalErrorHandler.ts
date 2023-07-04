@@ -8,14 +8,18 @@ import config from '../../config';
 import { ZodError } from 'zod';
 import handleZodError from '../../errors/handleZodError';
 import handleCastError from '../../errors/handleCastError';
+import { Logger } from '../../Shared/logger';
 
 // global error handling
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   //   res.status(400).json({ error: err })
 
   config.env === 'development'
-    ? console.log('😀 GlobalErrorHandler', error)
-    : console.log('😀 GlobalErrorHandler', error);
+    ? Logger.errorLogger.error('😀 GlobalErrorHandler', error)
+    : Logger.errorLogger.error('😀 GlobalErrorHandler', error);
+  // config.env === 'development'
+  //   ? console.log('😀 GlobalErrorHandler', error)
+  //   : console.log('😀 GlobalErrorHandler', error);
   let statusCode: string | number = 500;
   let message = 'Something went wrong';
   let errorsMessages: IGenericErrorMessage[] = [];
