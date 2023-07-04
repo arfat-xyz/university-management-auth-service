@@ -34,10 +34,12 @@ export const FacultyUserSchema = new Schema<IFacultyUser, IFacultyUserModel>(
     emergencyContactNo: {
       type: String,
       required: true,
+      unique: true,
     },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
 
     profileImage: {
@@ -66,6 +68,7 @@ export const FacultyUserSchema = new Schema<IFacultyUser, IFacultyUserModel>(
     contactNo: {
       type: String,
       required: true,
+      unique: true,
     },
     permanentAddress: {
       type: String,

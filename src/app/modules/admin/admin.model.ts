@@ -32,10 +32,12 @@ export const AdminSchema = new Schema<IAdmin, IAdminModel>(
     emergencyContactNo: {
       type: String,
       required: true,
+      unique: true,
     },
     email: {
       type: String,
       required: true,
+      unique: true,
     },
 
     profileImage: {
