@@ -12,4 +12,10 @@ export default {
   university_default_faculty_password:
     process.env.UNIVERSITY_DEFAULT_FACULTY_PASSWORD,
   bycrypt_saltrounds: process.env.BYCRYPT_SALTROUNDS,
+  jwt: {
+    jwt_secret: process.env.JWT_SECRET,
+    jwt_secret_expires_in: process.env.JWT_SECRET_EXPIRES_IN,
+    jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
+    jwt_refresh_secret_expires_in: process.env.JWT_REFRESH_SECRET_EXPIRES_IN,
+  },
 };

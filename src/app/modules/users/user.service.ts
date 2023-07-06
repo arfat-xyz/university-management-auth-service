@@ -33,7 +33,6 @@ const createStudent = async (
   // user.id = id;
 
   let newUserAllData = null;
-  // console.log(student, user);
   // set default password
   if (!user.password) {
     user.password = config.university_default_student_password as string;
@@ -41,7 +40,7 @@ const createStudent = async (
 
   // SET STUDENT ROLE
   user.role = 'student';
-
+  user.needsPasswordChange = true;
   // GETTING ACADEMIC SEMISTER
   const academicSemister = await AcademicSemister.findById(
     student.academicSemister
@@ -110,7 +109,6 @@ const createStudent = async (
 };
 const createAdmin = async (admin: IAdmin, user: IUser) => {
   let newUserAllData = null;
-  // console.log(student, user);
   // set default password
   if (!user.password) {
     user.password = config.university_default_admin_password as string;
@@ -118,7 +116,7 @@ const createAdmin = async (admin: IAdmin, user: IUser) => {
 
   // SET STUDENT ROLE
   user.role = 'admin';
-
+  user.needsPasswordChange = true;
   // GENERATE STUDENT ID  ALSO CREATE USER & STUDENT IN DATABASE
 
   const session = await mongoose.startSession();
@@ -169,7 +167,6 @@ const createAdmin = async (admin: IAdmin, user: IUser) => {
 
 const createFaculty = async (faculty: IFacultyUser, user: IUser) => {
   let newUserAllData = null;
-  // console.log(student, user);
   // set default password
   if (!user.password) {
     user.password = config.university_default_faculty_password as string;
@@ -177,6 +174,7 @@ const createFaculty = async (faculty: IFacultyUser, user: IUser) => {
 
   // SET STUDENT ROLE
   user.role = 'faculty';
+  user.needsPasswordChange = true;
 
   // GENERATE STUDENT ID  ALSO CREATE USER & STUDENT IN DATABASE
   const session = await mongoose.startSession();
