@@ -33,7 +33,6 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     errorsMessages = simplifiedError.errorsMessages;
   } else if (error?.name === 'CastError') {
     const simplifiedError = handleCastError(error as CastError);
-    console.log(simplifiedError);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorsMessages = simplifiedError.errorsMessages;
