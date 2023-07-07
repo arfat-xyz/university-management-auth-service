@@ -2,7 +2,11 @@ import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
 import ApiError from '../../../errors/ApiErrors';
 import { User } from '../users/user.schema';
-import { ILogin, ILoginUserResponse } from './auth.interface';
+import {
+  ILogin,
+  ILoginUserResponse,
+  IRefreshTokenResponse,
+} from './auth.interface';
 import config from '../../../config';
 import { JWTHelpers } from '../../../helpers/jwtHelpers';
 
@@ -49,4 +53,28 @@ const authLogin = async (payload: ILogin): Promise<ILoginUserResponse> => {
   return { accessToken, refreshToken, needsPasswordChange };
 };
 
-export const AuthService = { authLogin };
+const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
+  let verifyToken = null;
+  try {
+    verifyToken = JWTHelpers.verifyToken(
+      token,
+      config.jwt.jwt_refresh_secret as Secret
+    );
+  } catch (err) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid refresh token');
+  }
+
+  // check if user exist or not
+  const { userId } = verifyToken;
+  const isUserExist = await User.userExists(userId);
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
+  const newAccessToken = JWTHelpers.createToken(
+    { id: isUserExist.id, role: isUserExist.role },
+    config.jwt.jwt_secret as Secret,
+    config.jwt.jwt_secret_expires_in as string
+  );
+  return { accessToken: newAccessToken };
+};
+export const AuthService = { authLogin, refreshToken };

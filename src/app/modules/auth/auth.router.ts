@@ -10,6 +10,11 @@ router.post(
   zodValidateRequest(AuthZodSchema.authLogin),
   AuthController.authLogin
 );
+router.post(
+  '/refresh-token',
+  zodValidateRequest(AuthZodSchema.refreshToken),
+  AuthController.refreshToken
+);
 
 // router.get('/:id', departmentController.getSingleDepartment);
 // router.patch(
