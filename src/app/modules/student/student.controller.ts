@@ -25,7 +25,6 @@ const getAllStudents = catchAsync(
       filters as IStudentFilters,
       paginationOptions
     );
-
     sendResponse<IStudent[]>(res, {
       statusCode: httpStatus.OK,
       success: true,
