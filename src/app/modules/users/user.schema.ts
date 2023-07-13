@@ -21,6 +21,9 @@ const userSchema = new Schema<IUser, UserModel>(
       type: Boolean,
       required: true,
     },
+    changePasswordAt: {
+      type: Date,
+    },
     password: {
       type: String,
       required: true,
@@ -70,6 +73,9 @@ userSchema.pre('save', async function (next) {
     this.password,
     Number(config.bycrypt_saltrounds)
   );
+  if (!this.needsPasswordChange) {
+    this.changePasswordAt = new Date();
+  }
   next();
 });
 

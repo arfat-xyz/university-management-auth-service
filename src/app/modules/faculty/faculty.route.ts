@@ -10,8 +10,7 @@ const router = Router();
 router.post(
   '/create-faculty',
   zodValidateRequest(facultyZodSchema.createFaculty),
-
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   facultyController.createFaculty
 );
 router.get(
@@ -19,8 +18,7 @@ router.get(
   auth(
     ENUM_USER_ROLE.SUPER_ADMIN,
     ENUM_USER_ROLE.ADMIN,
-    ENUM_USER_ROLE.FACULTY,
-    ENUM_USER_ROLE.STUDENT
+    ENUM_USER_ROLE.FACULTY
   ),
   facultyController.getSingleFaculty
 );
@@ -36,12 +34,16 @@ router.patch(
 );
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
   facultyController.deleteFaculty
 );
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  auth(
+    ENUM_USER_ROLE.SUPER_ADMIN,
+    ENUM_USER_ROLE.FACULTY,
+    ENUM_USER_ROLE.ADMIN
+  ),
   facultyController.getAllFaculty
 );
 

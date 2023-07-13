@@ -44,11 +44,6 @@ export const AdminSchema = new Schema<IAdmin, IAdminModel>(
       type: String,
       // required: true,
     },
-    department: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'AcademicDepartment',
-    },
     designation: {
       type: String,
       required: true,

@@ -8,7 +8,7 @@ type IApiResponse<T> = {
     page: number;
     limit: number;
   } | null;
-  data: T | null;
+  data?: T | null;
 };
 const sendResponse = <T>(res: Response, funData: IApiResponse<T>): void => {
   const { statusCode, success, message, data, meta } = funData;

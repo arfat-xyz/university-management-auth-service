@@ -6,6 +6,7 @@ import { departmentRouter } from '../modules/department/detpartment.route';
 import { StudentsRoutes } from '../modules/student/student.route';
 import { FacultyUsers } from '../modules/FacultyUser/facultyUser.route';
 import { AuthRoutes } from '../modules/auth/auth.router';
+import { AdminRoutes } from '../modules/admin/admin.route';
 
 const moduleRoutes = [
   {
@@ -31,6 +32,10 @@ const moduleRoutes = [
   {
     path: '/faculty',
     route: FacultyUsers,
+  },
+  {
+    path: '/admins',
+    route: AdminRoutes,
   },
   {
     path: '/auth',
